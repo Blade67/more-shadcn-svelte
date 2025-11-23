@@ -1,0 +1,83 @@
+[
+	{
+		"name": "walkthrough",
+		"title": "Walkthrough",
+		"type": "registry:ui",
+		"description": "A guided tour component with spotlight and popover.",
+		"dependencies": [
+			"@floating-ui/dom"
+		],
+		"registryDependencies": [
+			"button"
+		],
+		"relativeUrl": "walkthrough.json"
+	},
+	{
+		"name": "bottom-nav",
+		"title": "Bottom Navigation",
+		"type": "registry:ui",
+		"description": "A mobile-first bottom navigation bar.",
+		"registryDependencies": [
+			"button"
+		],
+		"relativeUrl": "bottom-nav.json"
+	},
+	{
+		"name": "number-ticker",
+		"title": "Number Ticker",
+		"type": "registry:ui",
+		"description": "An animated number counter using spring physics.",
+		"dependencies": [
+			"svelte/motion"
+		],
+		"registryDependencies": [],
+		"relativeUrl": "number-ticker.json"
+	},
+	{
+		"name": "phone-input",
+		"title": "Phone Input",
+		"type": "registry:ui",
+		"description": "International phone input with validation and formatting.",
+		"dependencies": [
+			"svelte-o-phone",
+			"libphonenumber-js"
+		],
+		"registryDependencies": [
+			"button",
+			"input",
+			"popover",
+			"command"
+		],
+		"relativeUrl": "phone-input.json"
+	},
+	{
+		"name": "shiny-button",
+		"title": "Shiny Button",
+		"type": "registry:ui",
+		"description": "A button with a shiny reflection effect.",
+		"registryDependencies": [
+			"button"
+		],
+		"relativeUrl": "shiny-button.json"
+	},
+	{
+		"name": "spotlight-card",
+		"title": "Spotlight Card",
+		"type": "registry:ui",
+		"description": "A card that reveals a radial gradient background on hover.",
+		"registryDependencies": [
+			"card"
+		],
+		"relativeUrl": "spotlight-card.json"
+	},
+	{
+		"name": "stepper",
+		"title": "Stepper",
+		"type": "registry:ui",
+		"description": "A visual indicator for multi-step processes.",
+		"registryDependencies": [
+			"button"
+		],
+		"relativeUrl": "stepper.json"
+	}
+]

@@ -1,0 +1,29 @@
+{
+	"$schema": "https://shadcn-svelte.com/schema/registry-item.json",
+	"name": "phone-input",
+	"title": "Phone Input",
+	"type": "registry:ui",
+	"description": "International phone input with validation and formatting.",
+	"dependencies": [
+		"svelte-o-phone",
+		"libphonenumber-js"
+	],
+	"registryDependencies": [
+		"button",
+		"input",
+		"popover",
+		"command"
+	],
+	"files": [
+		{
+			"content": "<script lang=\"ts\">\r\n    import { usePhonePicker } from '@kevwpl/svelte-o-phone';\r\n    import * as ButtonGroup from \"$lib/components/ui/button-group/index.js\";\r\n    import * as Select from \"$lib/components/ui/select/index.js\";\r\n    import {Input} from \"$lib/components/ui/input/index.js\";\r\n\r\n    let {\r\n        class: className,\r\n        placeholder = \"Phone number\",\r\n\r\n        // usePhonePicker Props\r\n        value = $bindable(\"\"),\r\n        country = $bindable(\"US\"),\r\n        initialValue = \"\",\r\n        allowedCountries = null,\r\n        sorting = \"alphabetic\",\r\n        customOrder = null,\r\n        autoDetectCountry = true,\r\n        detectInitialCountry = false,\r\n        detectionPriority = ['language', 'ip'],\r\n        onchange,\r\n        ...rest\r\n    }: {\r\n        class?: string;\r\n        placeholder?: string;\r\n        value?: string;\r\n        country?: string | null;\r\n        initialValue?: string;\r\n        allowedCountries?: string[] | null;\r\n        sorting?: 'alphabetic' | 'numeric' | 'custom';\r\n        customOrder?: string[] | null;\r\n        autoDetectCountry?: boolean;\r\n        detectInitialCountry?: boolean;\r\n        detectionPriority?: ('language' | 'ip')[];\r\n        onchange?: (data: any) => void;\r\n        [key: string]: any;\r\n    } = $props();\r\n\r\n    const picker = usePhonePicker({\r\n        initialValue: initialValue || value,\r\n        initialCountry: country || \"US\",\r\n        allowedCountries,\r\n        sorting,\r\n        customOrder,\r\n        autoDetectCountry,\r\n        detectInitialCountry,\r\n        detectionPriority,\r\n        onchange: (data) => {\r\n            value = data.value;\r\n            country = data.country;\r\n            if (onchange) onchange(data);\r\n        }\r\n    });\r\n\r\n    $effect(() => {\r\n        if (inputElement) {\r\n            picker.bindInput(inputElement);\r\n            console.log(\"BOUND\")\r\n        }\r\n    });\r\n\r\n    let inputElement: HTMLInputElement | null = $state(null);\r\n</script>\r\n\r\n\r\n<ButtonGroup.Root>\r\n    <Select.Root open={picker.dropdownOpen} bind:value={picker.selectedCountryCode} type=\"single\">\r\n        <Select.Trigger onclick={() => picker.toggleDropdown()}>\r\n            <span>{picker.selectedCountry.flag}</span>\r\n            <span>{picker.selectedCountry.dialCode}</span>\r\n        </Select.Trigger>\r\n        <Select.Content>\r\n            {#each picker.countryList as c}\r\n                <Select.Item\r\n                        value={c.code}\r\n                        class=\"flex gap-2 items-center p-2 cursor-pointer\"\r\n                        onclick={() => picker.selectCountry(c)}>\r\n                    <span class=\"flag\">{c.flag}</span>\r\n                    <span class=\"name\">{c.name}</span>\r\n                    <span class=\"code\">{c.dialCode}</span>\r\n                </Select.Item>\r\n            {/each}\r\n        </Select.Content>\r\n    </Select.Root>\r\n    <Input\r\n            bind:ref={picker.ref}\r\n            type=\"tel\"\r\n            {placeholder}\r\n            value={picker.input}\r\n            oninput={picker.handleInput}\r\n            aria-label=\"Phone number input\"\r\n    />\r\n</ButtonGroup.Root>",
+			"type": "registry:ui",
+			"target": "phone-input/phone-input.svelte"
+		},
+		{
+			"content": "import PhoneInput from \"./phone-input.svelte\";\r\nexport { PhoneInput };",
+			"type": "registry:ui",
+			"target": "phone-input/index.ts"
+		}
+	]
+}

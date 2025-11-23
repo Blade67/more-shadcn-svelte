@@ -1,0 +1,173 @@
+{
+  "$schema": "https://shadcn-svelte.com/schema/registry.json",
+  "name": "more-shadcn-svelte",
+  "homepage": "https://your-site.com",
+  "items": [
+    {
+      "name": "walkthrough",
+      "type": "registry:ui",
+      "title": "Walkthrough",
+      "description": "A guided tour component with spotlight and popover.",
+      "dependencies": ["@floating-ui/dom"],
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "src/lib/components/ui/walkthrough/walkthrough.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/walkthrough/walkthrough-content.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/walkthrough/walkthrough-spotlight.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/walkthrough/ctx.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/walkthrough/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "bottom-nav",
+      "type": "registry:ui",
+      "title": "Bottom Navigation",
+      "description": "A mobile-first bottom navigation bar.",
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "src/lib/components/ui/bottom-nav/bottom-nav.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/bottom-nav/bottom-nav-item.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/bottom-nav/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "number-ticker",
+      "type": "registry:ui",
+      "title": "Number Ticker",
+      "description": "An animated number counter using spring physics.",
+      "dependencies": ["svelte/motion"],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/lib/components/ui/number-ticker/number-ticker.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/number-ticker/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "phone-input",
+      "type": "registry:ui",
+      "title": "Phone Input",
+      "description": "International phone input with validation and formatting.",
+      "dependencies": ["svelte-o-phone", "libphonenumber-js"],
+      "registryDependencies": ["button", "input", "popover", "command"],
+      "files": [
+        {
+          "path": "src/lib/components/ui/phone-input/phone-input.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/phone-input/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "shiny-button",
+      "type": "registry:ui",
+      "title": "Shiny Button",
+      "description": "A button with a shiny reflection effect.",
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "src/lib/components/ui/shiny-button/shiny-button.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/shiny-button/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "spotlight-card",
+      "type": "registry:ui",
+      "title": "Spotlight Card",
+      "description": "A card that reveals a radial gradient background on hover.",
+      "registryDependencies": ["card"],
+      "files": [
+        {
+          "path": "src/lib/components/ui/spotlight-card/spotlight-card.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/spotlight-card/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "stepper",
+      "type": "registry:ui",
+      "title": "Stepper",
+      "description": "A visual indicator for multi-step processes.",
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "src/lib/components/ui/stepper/stepper.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/stepper/stepper-item.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/stepper/stepper-trigger.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/stepper/stepper-indicator.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/stepper/stepper-separator.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/stepper/stepper-title.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/stepper/stepper-description.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/stepper/ctx.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/stepper/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}

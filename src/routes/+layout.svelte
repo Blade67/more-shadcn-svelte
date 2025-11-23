@@ -1,0 +1,165 @@
+<script lang="ts">
+    import "../app.css";
+    import { Badge } from "$lib/components/ui/badge/index.js";
+    import { Button } from "$lib/components/ui/button/index.js";
+    import * as Kbd from "$lib/components/ui/kbd/index.js";
+    import * as Command from "$lib/components/ui/command/index.js";
+    import { LightSwitch } from '$lib/components/ui/light-switch';
+    import { ModeWatcher, setMode } from "mode-watcher";
+    import {
+        Rocket,
+        Footprints,
+        Sparkle,
+        Square,
+        ArrowBigRightDash,
+        ClockArrowUp,
+        PanelBottomClose, PhoneCall
+    } from "@lucide/svelte";
+    import { page } from '$app/state';
+    import { SearchIcon } from "lucide-svelte";
+    import { goto } from "$app/navigation";
+
+    let { children } = $props();
+
+    const items = [
+        {
+            title: "Getting Started",
+            links: [
+                { href: "/", label: "Introduction", icon: Rocket}
+            ]
+        },
+        {
+            title: "Components",
+            links: [
+                { href: "/components/bottom-nav", label: "Bottom Nav", icon: PanelBottomClose },
+                { href: "/components/number-ticker", label: "Number Ticker", icon: ClockArrowUp },
+                { href: "/components/phone-input", label: "Phone Input", icon: PhoneCall },
+                { href: "/components/stepper", label: "Stepper", icon: ArrowBigRightDash },
+                { href: "/components/shiny-button", label: "Shiny Button", icon: Sparkle },
+                { href: "/components/spotlight-card", label: "Spotlight Card", icon: Square },
+                { href: "/components/walkthrough", label: "Walkthrough", icon: Footprints },
+            ]
+        }
+    ]
+
+    function handleKeydown(e: KeyboardEvent) {
+        if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+            e.preventDefault();
+            searchOpen = !searchOpen;
+        }
+    }
+
+    function getCurrentTitle(): string {
+        const currentPath = page.url.pathname;
+        const baseTitle = "More Shadcn";
+
+        // Find the active link in the navigation items
+        for (const group of items) {
+            const link = group.links.find(l => currentPath.endsWith(l.href) && l.href !== "/");
+            if (link) {
+                return `${link.label} – ${baseTitle}`;
+            }
+        }
+
+        // Handle Home/Root specifically if needed
+        if (currentPath === "/") return `Introduction – ${baseTitle}`;
+
+        return baseTitle;
+    }
+    let searchOpen = $state(false);
+</script>
+
+<svelte:head>
+    <title>{getCurrentTitle()}</title>
+    <link rel="icon" type="image/svg" href="/logo.svg" />
+</svelte:head>
+
+<svelte:document onkeydown={handleKeydown} />
+<ModeWatcher />
+
+<div class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+
+    <!-- SIDEBAR: ID added for Walkthrough Target -->
+    <div id="layout-sidebar" class="bg-muted/40 hidden border-r md:block sticky top-0 z-20 h-screen">
+        <div class="flex h-full max-h-screen flex-col gap-2">
+            <div class="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+                <!-- LOGO: ID added for Walkthrough Target -->
+                <a id="layout-logo" href="/" class="flex items-center gap-2 font-semibold">
+                    <img src="/logo.svg" alt="Logo" class="size-8">
+                    <span class="text-xl font-bold">More Shadcn</span>
+                </a>
+            </div>
+            <div class="flex-1 pt-4">
+                <nav class="grid items-start px-2 text-sm font-medium lg:px-4">
+                    {#each items as group}
+                        <div class="mb-4">
+                            <h4 class="mb-1 rounded-md px-2 py-1 text-sm text-muted-foreground">
+                                {group.title.toUpperCase()}
+                            </h4>
+
+                            <div class="grid grid-flow-row auto-rows-max text-sm">
+                                {#each group.links as link}
+                                    {@const Icon = link.icon}
+                                    {@const isActive = page.url.pathname.endsWith(link.href)}
+                                    {#if isActive}
+                                        <Button href={link.href} variant="ghost" class="justify-start text-base flex items-center h-11 bg-accent">
+                                            <Icon class="size-4"/>
+                                            {link.label}
+                                        </Button>
+                                    {:else}
+                                        <Button href={link.href} variant="ghost" class="justify-start text-base text-muted-foreground flex items-center h-11">
+                                            <Icon class="size-4"/>
+                                            {link.label}
+                                        </Button>
+                                    {/if}
+                                {/each}
+                            </div>
+                        </div>
+                    {/each}
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col">
+        <header class="bg-muted/40 flex backdrop-blur-2xl h-14 items-center gap-4 border-b px-4 lg:h-[60px] lg:px-4 sticky top-0 z-20">
+            <div class="w-full flex items-center justify-between">
+                <!-- SEARCH: ID added for Walkthrough Target -->
+                <Button id="layout-search" variant="outline" class="flex justify-between items-center gap-12" onclick={() => searchOpen = true}>
+                    <div class="flex items-center gap-2 text-muted-foreground">
+                        <SearchIcon class="size-4" />
+                        Search docs...
+                    </div>
+
+                    <Kbd.Group>
+                        <Kbd.Root>Ctrl</Kbd.Root>
+                        <span class="text-muted-foreground">+</span>
+                        <Kbd.Root>K</Kbd.Root>
+                    </Kbd.Group>
+                </Button>
+                <LightSwitch variant="ghost" />
+            </div>
+        </header>
+        <main>
+            {@render children()}
+        </main>
+    </div>
+</div>
+
+<Command.Dialog bind:open={searchOpen}>
+    <Command.Input placeholder="Search Docs..." />
+    <Command.List>
+        <Command.Empty>No results found.</Command.Empty>
+        {#each items as group}
+            <Command.Group heading={group.title.toUpperCase()}>
+                {#each group.links as link}
+                    {@const Icon = link.icon}
+                    <Command.Item class="flex items-center gap-2" onclick={() => {searchOpen = false; goto(link.href)}}>
+                        <Icon class="size-2" />
+                        {link.label}
+                    </Command.Item>
+                {/each}
+            </Command.Group>
+        {/each}
+    </Command.List>
+</Command.Dialog>

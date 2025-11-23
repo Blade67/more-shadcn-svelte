@@ -1,0 +1,22 @@
+{
+	"$schema": "https://shadcn-svelte.com/schema/registry-item.json",
+	"name": "number-ticker",
+	"title": "Number Ticker",
+	"type": "registry:ui",
+	"description": "An animated number counter using spring physics.",
+	"dependencies": [
+		"svelte/motion"
+	],
+	"files": [
+		{
+			"content": "<script lang=\"ts\">\r\n    import { cn } from \"$UTILS$\";\r\n    import { spring } from \"svelte/motion\";\r\n    import { onMount } from \"svelte\";\r\n\r\n    let {\r\n        value = 0,\r\n        initial = 0,\r\n        duration = 1000, // Target duration in ms (approximate for spring)\r\n        class: className\r\n    }: {\r\n        value: number;\r\n        initial?: number;\r\n        duration?: number;\r\n        class?: string;\r\n    } = $props();\r\n\r\n    // Create a spring store\r\n    // Stiffness and damping control the \"bounciness\" and speed\r\n    const count = spring(initial, {\r\n        stiffness: 0.1,\r\n        damping: 0.4\r\n    });\r\n\r\n    let element: HTMLSpanElement;\r\n    let isVisible = false;\r\n\r\n    onMount(() => {\r\n        const observer = new IntersectionObserver(\r\n            (entries) => {\r\n                if (entries[0].isIntersecting && !isVisible) {\r\n                    isVisible = true;\r\n                    // Set the spring target to the final value\r\n                    count.set(value);\r\n                }\r\n            },\r\n            { threshold: 0.1 } // Trigger when 10% visible\r\n        );\r\n\r\n        if (element) observer.observe(element);\r\n\r\n        return () => observer.disconnect();\r\n    });\r\n\r\n    // Format the number with commas (e.g., 1,234)\r\n    // You can customize this locale if needed\r\n    let displayValue = $derived(Math.round($count).toLocaleString(\"en-US\"));\r\n</script>\r\n\r\n<span\r\n        bind:this={element}\r\n        class={cn(\"tabular-nums tracking-tight text-foreground\", className)}\r\n>\r\n\t{displayValue}\r\n</span>",
+			"type": "registry:ui",
+			"target": "number-ticker/number-ticker.svelte"
+		},
+		{
+			"content": "import NumberTicker from \"./number-ticker.svelte\";\r\nexport { NumberTicker };",
+			"type": "registry:ui",
+			"target": "number-ticker/index.ts"
+		}
+	]
+}

@@ -1,0 +1,27 @@
+{
+	"$schema": "https://shadcn-svelte.com/schema/registry-item.json",
+	"name": "bottom-nav",
+	"title": "Bottom Navigation",
+	"type": "registry:ui",
+	"description": "A mobile-first bottom navigation bar.",
+	"registryDependencies": [
+		"button"
+	],
+	"files": [
+		{
+			"content": "<script lang=\"ts\">\r\n    import { cn } from \"$UTILS$\";\r\n    import type { Snippet } from \"svelte\";\r\n\r\n    let { class: className, children }: { class?: string, children: Snippet } = $props();\r\n</script>\r\n\r\n<nav\r\n        class={cn(\r\n        \"flex w-full items-center justify-around border-t bg-background h-16 px-2 shadow-[0_-1px_2px_rgba(0,0,0,0.03)]\",\r\n        className\r\n    )}\r\n>\r\n    {@render children()}\r\n</nav>",
+			"type": "registry:ui",
+			"target": "bottom-nav/bottom-nav.svelte"
+		},
+		{
+			"content": "<script lang=\"ts\">\r\n    import { cn } from \"$UTILS$\";\r\n    import type { Snippet } from \"svelte\";\r\n    import { page } from \"$app/stores\";\r\n\r\n    let {\r\n        href,\r\n        class: className,\r\n        isActive, // Optional override for manual control\r\n        children\r\n    }: {\r\n        href: string,\r\n        class?: string,\r\n        isActive?: boolean,\r\n        children: Snippet\r\n    } = $props();\r\n\r\n    // Check active state\r\n    let active = $derived(isActive ?? $page.url.pathname === href);\r\n</script>\r\n\r\n<a\r\n        {href}\r\n        class={cn(\r\n        \"group flex flex-1 flex-col items-center justify-center gap-1 text-[10px] font-medium transition-colors duration-200 hover:bg-muted/20 h-full rounded-md\",\r\n        active ? \"text-primary\" : \"text-muted-foreground hover:text-foreground\",\r\n        className\r\n    )}\r\n>\r\n    <div class=\"flex flex-col items-center justify-center gap-1\">\r\n        {@render children()}\r\n    </div>\r\n</a>",
+			"type": "registry:ui",
+			"target": "bottom-nav/bottom-nav-item.svelte"
+		},
+		{
+			"content": "import BottomNav from \"./bottom-nav.svelte\";\r\nimport BottomNavItem from \"./bottom-nav-item.svelte\";\r\n\r\nexport {\r\n    BottomNav as Root,\r\n    BottomNavItem as Item,\r\n};",
+			"type": "registry:ui",
+			"target": "bottom-nav/index.ts"
+		}
+	]
+}

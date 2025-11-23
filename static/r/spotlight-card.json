@@ -1,0 +1,22 @@
+{
+	"$schema": "https://shadcn-svelte.com/schema/registry-item.json",
+	"name": "spotlight-card",
+	"title": "Spotlight Card",
+	"type": "registry:ui",
+	"description": "A card that reveals a radial gradient background on hover.",
+	"registryDependencies": [
+		"card"
+	],
+	"files": [
+		{
+			"content": "<script lang=\"ts\">\r\n    import { cn } from \"$UTILS$\";\r\n    import type { Snippet } from \"svelte\";\r\n    import type { HTMLAttributes } from \"svelte/elements\";\r\n\r\n    type Props = HTMLAttributes<HTMLDivElement> & {\r\n        children: Snippet;\r\n        color?: string;\r\n        size?: number;\r\n    };\r\n\r\n    let {\r\n        class: className,\r\n        children,\r\n        color,\r\n        size = 350,\r\n        ...rest\r\n    }: Props = $props();\r\n\r\n    let div: HTMLDivElement;\r\n    let opacity = $state(0);\r\n    let position = $state({ x: 0, y: 0 });\r\n\r\n    const handleMouseMove = (e: MouseEvent) => {\r\n        if (!div) return;\r\n        const rect = div.getBoundingClientRect();\r\n        position = { x: e.clientX - rect.left, y: e.clientY - rect.top };\r\n    };\r\n</script>\r\n\r\n<div\r\n        bind:this={div}\r\n        onmousemove={handleMouseMove}\r\n        onmouseenter={() => opacity = 1}\r\n        onmouseleave={() => opacity = 0}\r\n        class={cn(\r\n        \"relative overflow-hidden rounded-xl border bg-card text-card-foreground shadow-sm\",\r\n        className\r\n    )}\r\n        {...rest}\r\n>\r\n    <div\r\n            class={cn(\r\n            \"pointer-events-none absolute inset-0 transition-opacity duration-300\",\r\n            // Apply default class-based colors ONLY if no custom color is provided\r\n            !color && \"bg-black/10 dark:bg-white/10\"\r\n        )}\r\n            style=\"\r\n            opacity: {opacity};\r\n            {color ? `background-color: ${color};` : ''}\r\n            mask-image: radial-gradient(\r\n                {size}px circle at {position.x}px {position.y}px,\r\n                black,\r\n                transparent\r\n            );\r\n            -webkit-mask-image: radial-gradient(\r\n                {size}px circle at {position.x}px {position.y}px,\r\n                black,\r\n                transparent\r\n            );\r\n        \"\r\n    ></div>\r\n\r\n    <div class=\"relative h-full\">\r\n        {@render children()}\r\n    </div>\r\n</div>",
+			"type": "registry:ui",
+			"target": "spotlight-card/spotlight-card.svelte"
+		},
+		{
+			"content": "import SpotlightCard from \"./spotlight-card.svelte\";\r\nexport { SpotlightCard };",
+			"type": "registry:ui",
+			"target": "spotlight-card/index.ts"
+		}
+	]
+}
