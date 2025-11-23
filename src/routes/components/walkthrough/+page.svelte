@@ -73,7 +73,7 @@
 
                     <!-- ID: tour-start-btn -->
                     <Button id="tour-start-btn" size="lg" onclick={() => openTour = true}>
-                        <Play class="mr-2 h-4 w-4" /> Start Layout Tour
+                        <Play class="mr-2 h-4 w-4" /> Start Tour
                     </Button>
                 </div>
             </DocPage.Preview>

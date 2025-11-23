@@ -16,7 +16,7 @@
         PanelBottomClose, PhoneCall
     } from "@lucide/svelte";
     import { page } from '$app/state';
-    import { SearchIcon } from "lucide-svelte";
+    import {GithubIcon, SearchIcon} from "lucide-svelte";
     import { goto } from "$app/navigation";
 
     let { children } = $props();
@@ -137,10 +137,13 @@
                         <Kbd.Root>K</Kbd.Root>
                     </Kbd.Group>
                 </Button>
-                <LightSwitch variant="ghost" />
+                <div class="flex items-center gap-2">
+                    <LightSwitch variant="ghost" />
+                    <Button variant="ghost" href="https://github.com/kevwpl/more-shadcn-svelte" size="icon" target="_blank"><GithubIcon /></Button>
+                </div>
             </div>
         </header>
-        <main>
+        <main class="flex w-full justify-center">
             {@render children()}
         </main>
     </div>
