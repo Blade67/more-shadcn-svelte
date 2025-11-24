@@ -7,7 +7,7 @@ import * as DocPage from "$lib/components/feature/doc-page";
 <DocPage.Root>
     <DocPage.Header>
         <DocPage.Title>Video</DocPage.Title>
-        <DocPage.Description>A custom video player component built with Svelte 5 and Tailwind CSS, following shadcn/ui design principles.</DocPage.Description>
+        <DocPage.Description>A custom video player.</DocPage.Description>
     </DocPage.Header>
     <DocPage.Content>
         <DocPage.Example>
