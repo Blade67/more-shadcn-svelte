@@ -16,7 +16,7 @@
         PanelBottomClose,
         PhoneCall,
         GithubIcon,
-        SearchIcon,
+        SearchIcon, ImagePlus,
     } from "lucide-svelte";
     import { page } from '$app/state';
     import { goto } from "$app/navigation";
@@ -35,6 +35,7 @@
             title: "Components",
             links: [
                 { href: "/components/bottom-nav", label: "Bottom Nav", icon: PanelBottomClose },
+                { href: "/components/image-zoom", label: "Image Zoom", icon: ImagePlus },
                 { href: "/components/number-ticker", label: "Number Ticker", icon: ClockArrowUp },
                 { href: "/components/phone-input", label: "Phone Input", icon: PhoneCall },
                 { href: "/components/stepper", label: "Stepper", icon: ArrowBigRightDash },

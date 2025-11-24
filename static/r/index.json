@@ -13,6 +13,16 @@
 		"relativeUrl": "walkthrough.json"
 	},
 	{
+		"name": "image-zoom",
+		"title": "Image Zoom",
+		"type": "registry:ui",
+		"description": "A component to zoom into images in an overlay.",
+		"registryDependencies": [
+			"button"
+		],
+		"relativeUrl": "image-zoom.json"
+	},
+	{
 		"name": "bottom-nav",
 		"title": "Bottom Navigation",
 		"type": "registry:ui",

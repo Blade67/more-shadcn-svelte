@@ -34,6 +34,31 @@
       ]
     },
     {
+      "name": "image-zoom",
+      "type": "registry:ui",
+      "title": "Image Zoom",
+      "description": "A component to zoom into images in an overlay.",
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "src/lib/components/ui/image-zoom/image-zoom.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/image-zoom/image-zoom-trigger.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/image-zoom/ctx.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/image-zoom/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "bottom-nav",
       "type": "registry:ui",
       "title": "Bottom Navigation",
