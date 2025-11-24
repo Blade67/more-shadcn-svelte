@@ -1,0 +1,38 @@
+{
+	"$schema": "https://shadcn-svelte.com/schema/registry-item.json",
+	"name": "date-strip",
+	"title": "Date Strip",
+	"type": "registry:ui",
+	"description": "A horizontal strip of dates with optional navigation.",
+	"dependencies": [
+		"lucide-svelte@^0.554.0"
+	],
+	"devDependencies": [
+		"@internationalized/date@^3.10.0"
+	],
+	"registryDependencies": [
+		"button"
+	],
+	"files": [
+		{
+			"content": "<!-- $lib/components/ui/date-strip/date-strip.svelte -->\r\n<script lang=\"ts\">\r\n    import { cn } from \"$UTILS$\";\r\n    import { setDateStripContext } from \"./ctx\";\r\n    import { Button } from \"$lib/components/ui/button\";\r\n    import { ChevronLeft, ChevronRight } from \"lucide-svelte\";\r\n    import type { Snippet } from \"svelte\";\r\n    import {\r\n        type DateValue,\r\n        getLocalTimeZone,\r\n        today,\r\n        startOfWeek,\r\n    } from \"@internationalized/date\";\r\n\r\n    let {\r\n        value = $bindable(),\r\n        class: className,\r\n        daysToShow = 5,\r\n        isDateDisabled = () => false,\r\n        onDateChange,\r\n        children\r\n    }: {\r\n        value?: DateValue | undefined;\r\n        class?: string;\r\n        daysToShow?: number;\r\n        isDateDisabled?: (date: DateValue) => boolean;\r\n        onDateChange?: (date: DateValue) => void;\r\n        children: Snippet<[{ date: DateValue }]>;\r\n    } = $props();\r\n\r\n    let startDate = $state(startOfWeek(today(getLocalTimeZone()), \"en-US\"));\r\n    let slideDirection = $state<\"start\" | \"end\">(\"end\");\r\n\r\n    const displayedDates = $derived(\r\n        Array.from({ length: daysToShow }, (_, i) => startDate.add({ days: i }))\r\n    );\r\n\r\n    function handlePrev() {\r\n        slideDirection = \"start\";\r\n        // Small timeout isn't needed strictly due to keyed #each,\r\n        // but explicit state setting guarantees order\r\n        startDate = startDate.add({ days: -daysToShow });\r\n    }\r\n\r\n    function handleNext() {\r\n        slideDirection = \"end\";\r\n        startDate = startDate.add({ days: daysToShow });\r\n    }\r\n\r\n    setDateStripContext({\r\n        selectedValue: () => value,\r\n        onSelect: (d) => {\r\n            value = d;\r\n            onDateChange?.(d);\r\n        },\r\n        isDateDisabled,\r\n        direction: () => slideDirection\r\n    });\r\n</script>\r\n\r\n<div class={cn(\"flex items-center gap-2 rounded-xl border bg-card p-1 shadow-sm\", className)}>\r\n    <Button variant=\"ghost\" size=\"icon\" class=\"h-7 w-7 shrink-0\" onclick={handlePrev}>\r\n        <ChevronLeft class=\"h-4 w-4\" />\r\n    </Button>\r\n\r\n    <div class=\"flex flex-1 justify-between gap-1 overflow-hidden\">\r\n        {#each displayedDates as date (date.toString())}\r\n            {@render children({ date })}\r\n        {/each}\r\n    </div>\r\n\r\n    <Button variant=\"ghost\" size=\"icon\" class=\"h-7 w-7 shrink-0\" onclick={handleNext}>\r\n        <ChevronRight class=\"h-4 w-4\" />\r\n    </Button>\r\n</div>",
+			"type": "registry:ui",
+			"target": "date-strip/date-strip.svelte"
+		},
+		{
+			"content": "<script lang=\"ts\">\r\n\timport { cn } from '$UTILS$';\r\n\timport { getDateStripContext } from './ctx';\r\n\timport { type DateValue, getLocalTimeZone, isToday } from '@internationalized/date';\r\n\timport { DateFormatter } from '@internationalized/date';\r\n\timport { Button } from '$lib/components/ui/button';\r\n\r\n\tlet {\r\n\t\tdate,\r\n\t\tclass: className\r\n\t}: {\r\n\t\tdate: DateValue;\r\n\t\tclass?: string;\r\n\t} = $props();\r\n\r\n\tconst ctx = getDateStripContext();\r\n\tconst formatterMonth = new DateFormatter('en-US', { month: 'short' });\r\n\tconst formatterDay = new DateFormatter('en-US', { day: 'numeric' });\r\n\r\n\tlet isSelected = $derived(ctx.selectedValue()?.compare(date) === 0);\r\n\tlet isDisabled = $derived(ctx.isDateDisabled(date));\r\n    let direction = $derived(ctx.direction());\r\n\r\n\tfunction handleClick() {\r\n\t\tif (!isDisabled) {\r\n\t\t\tctx.onSelect(date);\r\n\t\t}\r\n\t}\r\n\r\n\tconst dateObj = $derived(date.toDate('UTC'));\r\n</script>\r\n\r\n<Button\r\n        variant=\"ghost\"\r\n        onclick={handleClick}\r\n        class={cn(\r\n        \"flex flex-col items-center justify-center -space-y-1 animate-in fade-in-5\",\r\n        \"w-12 h-12 shrink-0 rounded-lg\",\r\n        direction === \"end\" ? \"slide-in-from-right-12\" : \"slide-in-from-left-12\",\r\n        isToday(date, getLocalTimeZone()) && \"bg-accent\",\r\n        isSelected && \"bg-primary text-primary-foreground\",\r\n        className\r\n    )}\r\n        disabled={isDisabled}\r\n>\r\n    <span class=\"text-[8px] font-medium uppercase opacity-70\">\r\n        {formatterMonth.format(dateObj)}\r\n    </span>\r\n    <span class=\"text-base font-bold leading-none\">\r\n        {formatterDay.format(dateObj)}\r\n    </span>\r\n</Button>",
+			"type": "registry:ui",
+			"target": "date-strip/date-strip-item.svelte"
+		},
+		{
+			"content": "import DateStrip from \"./date-strip.svelte\";\r\nimport DateStripItem from \"./date-strip-item.svelte\";\r\n\r\nexport {\r\n    DateStrip as Root,\r\n    DateStripItem as Item,\r\n};",
+			"type": "registry:ui",
+			"target": "date-strip/index.ts"
+		},
+		{
+			"content": "import { getContext, setContext } from \"svelte\";\r\nimport type { DateValue } from \"@internationalized/date\";\r\n\r\nconst DATESTRIP_KEY = Symbol(\"datestrip\");\r\n\r\ntype DateStripContext = {\r\n    selectedValue: () => DateValue | undefined;\r\n    onSelect: (date: DateValue) => void;\r\n    isDateDisabled: (date: DateValue) => boolean;\r\n    direction: () => \"start\" | \"end\";\r\n};\r\n\r\nexport function setDateStripContext(props: DateStripContext) {\r\n    setContext(DATESTRIP_KEY, props);\r\n}\r\n\r\nexport function getDateStripContext() {\r\n    return getContext<DateStripContext>(DATESTRIP_KEY);\r\n}",
+			"type": "registry:ui",
+			"target": "date-strip/ctx.ts"
+		}
+	]
+}

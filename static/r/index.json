@@ -33,6 +33,16 @@
 		"relativeUrl": "autocomplete.json"
 	},
 	{
+		"name": "date-strip",
+		"title": "Date Strip",
+		"type": "registry:ui",
+		"description": "A horizontal strip of dates with optional navigation.",
+		"registryDependencies": [
+			"button"
+		],
+		"relativeUrl": "date-strip.json"
+	},
+	{
 		"name": "bottom-nav",
 		"title": "Bottom Navigation",
 		"type": "registry:ui",

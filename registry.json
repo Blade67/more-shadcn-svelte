@@ -80,6 +80,31 @@
       ]
     },
     {
+      "name": "date-strip",
+      "type": "registry:ui",
+      "title": "Date Strip",
+      "description": "A horizontal strip of dates with optional navigation.",
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "src/lib/components/ui/date-strip/date-strip.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/date-strip/date-strip-item.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/date-strip/index.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/date-strip/ctx.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "bottom-nav",
       "type": "registry:ui",
       "title": "Bottom Navigation",
