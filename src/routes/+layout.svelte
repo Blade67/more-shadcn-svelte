@@ -70,6 +70,7 @@
 
             return baseTitle;
         }
+        return "More Shadcn";
     }
     let searchOpen = $state(false);
 </script>
