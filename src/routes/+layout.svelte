@@ -13,11 +13,14 @@
         Square,
         ArrowBigRightDash,
         ClockArrowUp,
-        PanelBottomClose, PhoneCall
-    } from "@lucide/svelte";
+        PanelBottomClose,
+        PhoneCall,
+        GithubIcon,
+        SearchIcon,
+    } from "lucide-svelte";
     import { page } from '$app/state';
-    import {GithubIcon, SearchIcon} from "lucide-svelte";
     import { goto } from "$app/navigation";
+    import {browser} from "$app/environment";
 
     let { children } = $props();
 
@@ -50,21 +53,23 @@
     }
 
     function getCurrentTitle(): string {
-        const currentPath = page.url.pathname;
-        const baseTitle = "More Shadcn";
+        if (browser) {
+            const currentPath = page.url.pathname;
+            const baseTitle = "More Shadcn";
 
-        // Find the active link in the navigation items
-        for (const group of items) {
-            const link = group.links.find(l => currentPath.endsWith(l.href) && l.href !== "/");
-            if (link) {
-                return `${link.label} – ${baseTitle}`;
+            // Find the active link in the navigation items
+            for (const group of items) {
+                const link = group.links.find(l => currentPath.endsWith(l.href) && l.href !== "/");
+                if (link) {
+                    return `${link.label} – ${baseTitle}`;
+                }
             }
+
+            // Handle Home/Root specifically if needed
+            if (currentPath === "/") return `Introduction – ${baseTitle}`;
+
+            return baseTitle;
         }
-
-        // Handle Home/Root specifically if needed
-        if (currentPath === "/") return `Introduction – ${baseTitle}`;
-
-        return baseTitle;
     }
     let searchOpen = $state(false);
 </script>
