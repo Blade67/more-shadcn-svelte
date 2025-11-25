@@ -67,6 +67,16 @@
 		"relativeUrl": "color-picker.json"
 	},
 	{
+		"name": "choicebox",
+		"title": "Choicebox",
+		"type": "registry:ui",
+		"description": "A visual radio group for selecting complex options.",
+		"registryDependencies": [
+			"label"
+		],
+		"relativeUrl": "choicebox.json"
+	},
+	{
 		"name": "qr-code",
 		"title": "QR Code",
 		"type": "registry:ui",

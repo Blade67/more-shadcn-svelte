@@ -143,6 +143,43 @@
       ]
     },
     {
+      "name": "choicebox",
+      "type": "registry:ui",
+      "title": "Choicebox",
+      "description": "A visual radio group for selecting complex options.",
+      "registryDependencies": ["label"],
+      "files": [
+        {
+          "path": "src/lib/components/ui/choicebox/choicebox.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/choicebox/choicebox-item.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/choicebox/choicebox-indicator.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/choicebox/choicebox-title.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/choicebox/choicebox-description.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/choicebox/ctx.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/choicebox/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "qr-code",
       "type": "registry:ui",
       "title": "QR Code",
