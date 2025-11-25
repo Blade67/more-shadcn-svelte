@@ -67,6 +67,14 @@
 		"relativeUrl": "color-picker.json"
 	},
 	{
+		"name": "cursor",
+		"title": "Cursor",
+		"type": "registry:ui",
+		"description": "A customizable cursor component.",
+		"registryDependencies": [],
+		"relativeUrl": "cursor.json"
+	},
+	{
 		"name": "number-ticker",
 		"title": "Number Ticker",
 		"type": "registry:ui",

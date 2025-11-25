@@ -143,6 +143,23 @@
       ]
     },
     {
+      "name": "cursor",
+      "type": "registry:ui",
+      "title": "Cursor",
+      "description": "A customizable cursor component.",
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/lib/components/ui/cursor/cursor.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/cursor/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "number-ticker",
       "type": "registry:ui",
       "title": "Number Ticker",

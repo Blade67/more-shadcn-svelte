@@ -16,7 +16,7 @@
         PanelBottomClose,
         PhoneCall,
         GithubIcon,
-        SearchIcon, ImagePlus, Book, SquarePlay, Calendar, Palette,
+        SearchIcon, ImagePlus, Book, SquarePlay, Calendar, Palette, MousePointer2,
     } from "lucide-svelte";
     import { page } from '$app/state';
     import { goto } from "$app/navigation";
@@ -37,6 +37,7 @@
                 { href: "/components/autocomplete", label: "Autocomplete", icon: Book },
                 { href: "/components/bottom-nav", label: "Bottom Nav", icon: PanelBottomClose },
                 { href: "/components/color-picker", label: "Color Picker", icon: Palette },
+                { href: "/components/cursor", label: "Cursor", icon: MousePointer2 },
                 { href: "/components/date-strip", label: "Date Strip", icon: Calendar },
                 { href: "/components/image-zoom", label: "Image Zoom", icon: ImagePlus },
                 { href: "/components/number-ticker", label: "Number Ticker", icon: ClockArrowUp },
