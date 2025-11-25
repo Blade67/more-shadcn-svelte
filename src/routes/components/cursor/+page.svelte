@@ -1,6 +1,7 @@
 <script lang="ts">
     import * as DocPage from '$lib/components/feature/doc-page';
     import * as Cursor from '$lib/components/ui/cursor';
+    import * as PlusGrid from '$lib/components/feature/plus-grid';
     import { onMount } from 'svelte';
 
     // Simulation State
@@ -27,26 +28,27 @@
     </DocPage.Header>
 
     <DocPage.Content>
-        <DocPage.Heading>Preview</DocPage.Heading>
         <DocPage.Example>
-            <DocPage.Preview class="relative h-[350px] w-full overflow-hidden py-10">
-                <!-- Static Example -->
-                <Cursor.Root
-                        x={280}
-                        y={80}
-                        color="#ea580c"
-                        name="@Kevin"
-                />
+            <PlusGrid.Root color="rgba(127, 127, 127, 0.21)" spacing="30">
+                <DocPage.Preview class="relative h-[350px] w-full overflow-hidden py-10 bg-muted/30">
+                    <!-- Static Example -->
+                    <Cursor.Root
+                            x={280}
+                            y={80}
+                            color="#ea580c"
+                            name="@Kevin"
+                    />
 
-                <!-- Animated Example -->
-                <Cursor.Root
-                        x={x + 180}
-                        y={y + 80}
-                        color="#0ea5e9"
-                        name="Guest User"
-                        message="I'm moving around!"
-                />
-            </DocPage.Preview>
+                    <!-- Animated Example -->
+                    <Cursor.Root
+                            x={x + 180}
+                            y={y + 80}
+                            color="#0ea5e9"
+                            name="Guest User"
+                            message="I'm moving around!"
+                    />
+                </DocPage.Preview>
+            </PlusGrid.Root>
             <DocPage.Code
                     code={`<Cursor.Root
   x={280}
@@ -68,9 +70,11 @@
             If you don't pass the `name`, `message` and `children` props, only the cursor will be visible.
         </DocPage.Text>
         <DocPage.Example>
-            <DocPage.Preview class="relative h-[200px] w-full bg-muted/30">
-                <Cursor.Root x={350} y={95} color="#ef00ef" />
-            </DocPage.Preview>
+            <PlusGrid.Root color="rgba(127, 127, 127, 0.21)" spacing="30">
+                <DocPage.Preview class="relative h-[200px] w-full bg-muted/30">
+                    <Cursor.Root x={350} y={95} color="#ef00ef" />
+                </DocPage.Preview>
+            </PlusGrid.Root>
             <DocPage.Code code={`<Cursor.Root x={350} y={95} color="#ef00ef" />`} />
         </DocPage.Example>
 
@@ -79,14 +83,16 @@
             You can pass snippets to the `children` prop for custom layouts (like reactions).
         </DocPage.Text>
         <DocPage.Example>
-            <DocPage.Preview class="relative h-[200px] w-full bg-muted/30">
-                <Cursor.Root x={150} y={80} color="#ef4444" name="Designer">
-                    <div class="mt-1 flex gap-1">
-                        <span class="rounded bg-white/20 px-1 text-[10px]">👍</span>
-                        <span class="rounded bg-white/20 px-1 text-[10px]">🔥</span>
-                    </div>
-                </Cursor.Root>
-            </DocPage.Preview>
+            <PlusGrid.Root color="rgba(127, 127, 127, 0.21)" spacing="30">
+                <DocPage.Preview class="relative h-[200px] w-full bg-muted/30">
+                    <Cursor.Root x={150} y={80} color="#ef4444" name="Designer">
+                        <div class="mt-1 flex gap-1">
+                            <span class="rounded bg-white/20 px-1 text-[10px]">👍</span>
+                            <span class="rounded bg-white/20 px-1 text-[10px]">🔥</span>
+                        </div>
+                    </Cursor.Root>
+                </DocPage.Preview>
+            </PlusGrid.Root>
             <DocPage.Code code={`<Cursor.Root x={150} y={80} color="#ef4444" name="Designer">
   <div class="mt-1 flex gap-1">
     <span class="bg-white/20 rounded px-1 text-[10px]">👍</span>
