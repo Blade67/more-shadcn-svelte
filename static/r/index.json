@@ -93,6 +93,14 @@
 		"relativeUrl": "tag-input.json"
 	},
 	{
+		"name": "status-dot",
+		"title": "Status Dot",
+		"type": "registry:ui",
+		"description": "A simple indicator for state, presence, or activity.",
+		"registryDependencies": [],
+		"relativeUrl": "status-dot.json"
+	},
+	{
 		"name": "number-ticker",
 		"title": "Number Ticker",
 		"type": "registry:ui",

@@ -198,6 +198,23 @@
       ]
     },
     {
+      "name": "status-dot",
+      "type": "registry:ui",
+      "title": "Status Dot",
+      "description": "A simple indicator for state, presence, or activity.",
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/lib/components/ui/status-dot/status-dot.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/status-dot/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "number-ticker",
       "type": "registry:ui",
       "title": "Number Ticker",
