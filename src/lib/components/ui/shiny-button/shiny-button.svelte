@@ -14,28 +14,50 @@
 		class: className,
 		variant = 'default',
 		size = 'default',
+		href = undefined,
 		children,
 		...rest
 	}: Props = $props();
 </script>
 
-<button
-	class={cn(
-		'relative overflow-hidden group cursor-pointer',
-		buttonVariants({ variant, size }),
-		className
-	)}
-	{...rest}
->
-	<div
-		class="shine-element absolute inset-0 -top-[20%] -bottom-[20%] z-0 hidden w-[50%] -translate-x-[200%] bg-gradient-to-r from-transparent via-white/25 to-transparent skew-x-[-20deg] group-hover:animate-none md:block"
-		aria-hidden="true"
-	></div>
+{#if href}
+	<a
+		class={cn(
+			'relative overflow-hidden group cursor-pointer',
+			buttonVariants({ variant, size }),
+			className
+		)}
+		{href}
+		{...rest}
+	>
+		<div
+			class="shine-element absolute inset-0 -top-[20%] -bottom-[20%] z-0 hidden w-[50%] -translate-x-[200%] bg-gradient-to-r from-transparent via-white/25 to-transparent skew-x-[-20deg] group-hover:animate-none md:block"
+			aria-hidden="true"
+		></div>
 
-	<span class="relative z-10 flex items-center justify-center">
-		{@render children()}
-	</span>
-</button>
+		<span class="relative z-10 flex items-center justify-center">
+			{@render children()}
+		</span>
+	</a>
+{:else}
+	<button
+		class={cn(
+			'relative overflow-hidden group cursor-pointer',
+			buttonVariants({ variant, size }),
+			className
+		)}
+		{...rest}
+	>
+		<div
+			class="shine-element absolute inset-0 -top-[20%] -bottom-[20%] z-0 hidden w-[50%] -translate-x-[200%] bg-gradient-to-r from-transparent via-white/25 to-transparent skew-x-[-20deg] group-hover:animate-none md:block"
+			aria-hidden="true"
+		></div>
+
+		<span class="relative z-10 flex items-center justify-center">
+			{@render children()}
+		</span>
+	</button>
+{/if}
 
 <style>
 	.shine-element {

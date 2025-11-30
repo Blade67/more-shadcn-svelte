@@ -26,7 +26,7 @@
 				project and customized to your needs.
 			</p>
 			<div class="flex items-center gap-4 pt-2">
-				<ShinyButton href="/components/stepper">
+				<ShinyButton href="/components/autocomplete">
 					Browse Components
 					<ArrowRight class="ml-2 h-4 w-4" />
 				</ShinyButton>
