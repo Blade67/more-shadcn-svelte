@@ -23,17 +23,11 @@
 			<p class="leading-7 text-muted-foreground">
 				This library extends the philosophy of shadcn/ui by providing more components that aren't
 				included in the base registry. These components are designed to be copy-pasted into your
-				project and customized to your needs.
-
-				<span class="text-muted-foreground">
-					You should also check out
-					<a
-						href="https://www.shadcn-svelte-extras.com/components/underline-tabs"
-						class="hover:underline hover:text-primary"
-					>
-						shadcn-svelte-extras
-					</a>
-				</span>
+				project and customized to your needs. You should also check out
+				<a href="https://www.shadcn-svelte-extras.com/" class="hover:underline hover:text-primary">
+					shadcn-svelte-extras
+				</a>
+				for even more components!
 			</p>
 			<div class="flex items-center gap-4 pt-2">
 				<ShinyButton href="/components/autocomplete">
