@@ -7,12 +7,20 @@
 		children,
 		title,
 		variant = 'default',
+
+		isStart = true,
+		isEnd = true,
+		isMiddle = false,
+
 		...rest
 	}: {
 		class?: string;
 		children?: Snippet;
 		title?: string;
 		variant?: 'default' | 'secondary' | 'destructive' | 'success' | 'warning';
+		isStart?: boolean;
+		isEnd?: boolean;
+		isMiddle?: boolean;
 		[key: string]: any;
 	} = $props();
 
@@ -30,13 +38,24 @@
 
 <div
 	class={cn(
-		'group relative flex w-full items-center gap-2 rounded px-2 py-1.5 text-xs font-medium border transition-all cursor-pointer mb-1 shadow-sm',
+		'group relative flex w-full items-center h-6 px-2 text-xs font-medium border-y transition-all cursor-pointer shadow-sm z-10',
 		variants[variant],
+
+		isStart && isEnd && 'rounded-md mx-1 w-[calc(100%-8px)] border-x',
+
+		isStart && !isEnd && 'rounded-l-md ml-1 mr-[-1px] w-[calc(100%-4px)] border-l z-20',
+
+		isMiddle && 'rounded-none mx-[-1px] w-[calc(100%+2px)] border-x-0 z-10',
+
+		!isStart && isEnd && 'rounded-r-md mr-1 ml-[-1px] w-[calc(100%-4px)] border-r z-20',
+
 		className
 	)}
 	{...rest}
 >
-	<div class="h-1.5 w-1.5 rounded-full bg-current shrink-0 opacity-70" />
-	<span class="truncate flex-1 text-left">{title}</span>
-	{@render children?.()}
+	<div class={cn('flex items-center gap-2 w-full overflow-hidden', !isStart && 'opacity-0')}>
+		<div class="h-1.5 w-1.5 rounded-full bg-current shrink-0 opacity-70" />
+		<span class="truncate flex-1 text-left">{title}</span>
+		{@render children?.()}
+	</div>
 </div>

@@ -5,17 +5,32 @@ const CALENDAR_KEY = Symbol('big-calendar');
 export type CalendarEvent = {
 	id: string;
 	title: string;
-	date: Date;
-	type?: 'default' | 'warning' | 'success' | 'destructive';
+	start: Date;
+	end: Date;
+	type?: 'default' | 'secondary' | 'destructive' | 'success' | 'warning';
 	[key: string]: any;
+};
+
+export type DateRange = {
+	start: Date | undefined;
+	end: Date | undefined;
 };
 
 type CalendarContext = {
 	currentDate: () => Date;
-	selectedDate: () => Date | undefined;
+	selectedRange: () => DateRange;
 	events: () => CalendarEvent[];
+	weekStartsOn: () => 0 | 1;
+	showWeekends: () => boolean;
+	isDragging: () => boolean;
+	isDateDisabled: (d: Date) => boolean;
+
+	getEventSlot: (date: Date, eventId: string) => number;
+
 	setDate: (d: Date) => void;
-	selectDate: (d: Date) => void;
+	startSelection: (d: Date, e?: MouseEvent) => void;
+	updateSelection: (d: Date) => void;
+	endSelection: () => void;
 	next: () => void;
 	prev: () => void;
 	today: () => void;

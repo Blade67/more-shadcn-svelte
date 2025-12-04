@@ -1,19 +1,21 @@
 <script lang="ts">
-    import { cn } from "$lib/utils";
-    import type { Snippet } from "svelte";
-    import * as Code from '$lib/components/ui/code';
+	import { cn } from '$lib/utils';
+	import type { Snippet } from 'svelte';
+	import * as Code from '$lib/components/ui/code';
 
-    let { class: className, code }: {
-        class?: string,
-        code: string
-    } = $props();
-
+	let {
+		class: className,
+		code
+	}: {
+		class?: string;
+		code: string;
+	} = $props();
 </script>
 
 <Code.Root
-        lang="svelte"
-        code={code}
-        class="rounded-t-none rounded-b-md border-t-0 w-full overflow-scroll bg-muted"
+	lang="svelte"
+	{code}
+	class="rounded-t-none rounded-b-md border-t-0 w-full max-h-[350px] overflow-scroll bg-muted"
 >
-    <Code.CopyButton />
+	<Code.CopyButton />
 </Code.Root>
