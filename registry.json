@@ -379,6 +379,35 @@
       ]
     },
     {
+      "name": "dock",
+      "type": "registry:ui",
+      "title": "Dock",
+      "description": "A macOS-style dock with magnification interaction.",
+      "registryDependencies": ["svelte/motion"],
+      "files": [
+        {
+          "path": "src/lib/components/ui/dock/dock.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/dock/dock-icon.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/dock/dock-separator.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/dock/ctx.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/dock/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "timeline",
       "type": "registry:ui",
       "title": "Timeline",

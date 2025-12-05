@@ -1,0 +1,40 @@
+{
+	"$schema": "https://shadcn-svelte.com/schema/registry-item.json",
+	"name": "dock",
+	"title": "Dock",
+	"type": "registry:ui",
+	"description": "A macOS-style dock with magnification interaction.",
+	"dependencies": [
+		"svelte-motion@^0.12.2"
+	],
+	"registryDependencies": [
+		"svelte/motion"
+	],
+	"files": [
+		{
+			"content": "<script lang=\"ts\">\n\timport { cn } from '$UTILS$';\n\timport { setDockContext } from './ctx';\n\timport { useMotionValue } from 'svelte-motion';\n\timport type { Snippet } from 'svelte';\n\n\tlet {\n\t\tclass: className,\n\t\tmagnification = 60,\n\t\tdistance = 140,\n\t\tchildren\n\t}: {\n\t\tclass?: string;\n\t\tmagnification?: number;\n\t\tdistance?: number;\n\t\tchildren: Snippet;\n\t} = $props();\n\n\tlet mouseX = useMotionValue(Infinity);\n\n\tsetDockContext({\n\t\tmouseX,\n\t\tmagnification,\n\t\tdistance\n\t});\n\n\tfunction handleMouseMove(e: MouseEvent) {\n\t\tmouseX.set(e.pageX);\n\t}\n\n\tfunction handleMouseLeave() {\n\t\tmouseX.set(Infinity);\n\t}\n</script>\n\n<div\n\tclass={cn(\n\t\t'mx-auto flex h-[58px] w-max items-center gap-2 rounded-2xl border bg-white px-4 dark:bg-black',\n\t\tclassName\n\t)}\n\tonmousemove={handleMouseMove}\n\tonmouseleave={handleMouseLeave}\n>\n\t{@render children()}\n</div>\n",
+			"type": "registry:ui",
+			"target": "dock/dock.svelte"
+		},
+		{
+			"content": "<script lang=\"ts\">\n\timport { cn } from '$UTILS$';\n\timport { getDockContext } from './ctx';\n\timport { Motion, useSpring, useTransform } from 'svelte-motion';\n\timport * as Tooltip from '$lib/components/ui/tooltip';\n\timport type { Snippet } from 'svelte';\n\n\tlet {\n\t\tclass: className,\n\t\tchildren,\n\t\ttooltip,\n\t\tonclick,\n\t\ttransparent = false\n\t}: {\n\t\tclass?: string;\n\t\tchildren: Snippet;\n\t\ttooltip?: string;\n\t\tonclick?: () => void;\n\t\ttransparent?: boolean;\n\t} = $props();\n\n\tlet ref: HTMLElement | undefined = $state();\n\tconst ctx = getDockContext();\n\tconst mouseX = ctx.mouseX;\n\n\tlet distanceCalc = useTransform(mouseX, (val: number) => {\n\t\tconst bounds = ref?.getBoundingClientRect() ?? { x: 0, width: 0 };\n\t\treturn val - bounds.x - bounds.width / 2;\n\t});\n\n\tlet widthSync = useTransform(\n\t\tdistanceCalc,\n\t\t[-ctx.distance, 0, ctx.distance],\n\t\t[40, ctx.magnification, 40]\n\t);\n\n\tlet width = useSpring(widthSync, {\n\t\tmass: 0.1,\n\t\tstiffness: 150,\n\t\tdamping: 12\n\t});\n</script>\n\n{#snippet IconContent()}\n\t<Motion style={{ width, height: width }} let:motion>\n\t\t<button\n\t\t\tuse:motion\n\t\t\tbind:this={ref}\n\t\t\t{onclick}\n\t\t\tclass={cn(\n\t\t\t\t'flex aspect-square cursor-pointer items-center justify-center rounded-full transition-colors',\n\t\t\t\t!transparent && 'hover:bg-gray-100 dark:hover:bg-neutral-800',\n\t\t\t\tclassName\n\t\t\t)}\n\t\t>\n\t\t\t{@render children()}\n\t\t</button>\n\t</Motion>\n{/snippet}\n\n{#if tooltip}\n\t<Tooltip.Provider>\n\t\t<Tooltip.Root>\n\t\t\t<Tooltip.Trigger>\n\t\t\t\t{@render IconContent()}\n\t\t\t</Tooltip.Trigger>\n\t\t\t<Tooltip.Content>\n\t\t\t\t<p>{tooltip}</p>\n\t\t\t</Tooltip.Content>\n\t\t</Tooltip.Root>\n\t</Tooltip.Provider>\n{:else}\n\t{@render IconContent()}\n{/if}\n",
+			"type": "registry:ui",
+			"target": "dock/dock-icon.svelte"
+		},
+		{
+			"content": "<script lang=\"ts\">\n\timport { cn } from '$UTILS$';\n\tlet { class: className }: { class?: string } = $props();\n</script>\n\n<div class={cn('h-8 w-[1px] bg-border mx-1', className)} />\n",
+			"type": "registry:ui",
+			"target": "dock/dock-separator.svelte"
+		},
+		{
+			"content": "import { getContext, setContext } from 'svelte';\nimport type { MotionValue } from 'svelte-motion';\n\nconst DOCK_KEY = Symbol('dock');\n\ntype DockContext = {\n\tmouseX: MotionValue<number>;\n\tmagnification: number;\n\tdistance: number;\n};\n\nexport function setDockContext(props: DockContext) {\n\tsetContext(DOCK_KEY, props);\n}\n\nexport function getDockContext() {\n\treturn getContext<DockContext>(DOCK_KEY);\n}\n",
+			"type": "registry:ui",
+			"target": "dock/ctx.ts"
+		},
+		{
+			"content": "import Root from './dock.svelte';\nimport Icon from './dock-icon.svelte';\nimport Separator from './dock-separator.svelte';\n\nexport { Root, Icon, Separator };\n",
+			"type": "registry:ui",
+			"target": "dock/index.ts"
+		}
+	]
+}

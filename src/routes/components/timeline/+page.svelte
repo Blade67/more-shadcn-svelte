@@ -21,7 +21,6 @@
 	</DocPage.Header>
 
 	<DocPage.Content>
-		<DocPage.Heading>Basic Example</DocPage.Heading>
 		<DocPage.Example>
 			<DocPage.Preview class="p-10 flex justify-start">
 				<Timeline.Root>

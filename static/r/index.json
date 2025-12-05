@@ -166,6 +166,16 @@
 		"relativeUrl": "number-ticker.json"
 	},
 	{
+		"name": "dock",
+		"title": "Dock",
+		"type": "registry:ui",
+		"description": "A macOS-style dock with magnification interaction.",
+		"registryDependencies": [
+			"svelte/motion"
+		],
+		"relativeUrl": "dock.json"
+	},
+	{
 		"name": "timeline",
 		"title": "Timeline",
 		"type": "registry:ui",

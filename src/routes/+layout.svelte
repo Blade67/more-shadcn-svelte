@@ -34,7 +34,8 @@
 		MoveHorizontal,
 		Mouse,
 		SquareSplitHorizontal,
-		History
+		History,
+		Dock
 	} from 'lucide-svelte';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
@@ -66,6 +67,7 @@
 			title: 'Navigation',
 			links: [
 				{ href: '/components/bottom-nav', label: 'Bottom Nav', icon: PanelBottomClose },
+				{ href: '/components/dock', label: 'Dock', icon: Dock },
 				{ href: '/components/stepper', label: 'Stepper', icon: ArrowBigRightDash },
 				{ href: '/components/walkthrough', label: 'Walkthrough', icon: Footprints }
 			]
