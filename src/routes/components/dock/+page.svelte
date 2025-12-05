@@ -24,7 +24,7 @@
 
 	<DocPage.Content>
 		<DocPage.Example>
-			<DocPage.Preview class="flex items-center justify-center h-48 pb-10">
+			<DocPage.Preview>
 				<Dock.Root>
 					<Dock.Icon class="bg-indigo-50 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400">
 						<Home class="size-5" />
@@ -82,7 +82,7 @@
 			You can put <code>&lt;img&gt;</code> tags inside the Dock items to create a realistic launcher.
 		</DocPage.Text>
 		<DocPage.Example>
-			<DocPage.Preview class="flex items-center justify-center h-48 pb-10 bg-dot-pattern">
+			<DocPage.Preview>
 				<Dock.Root magnification={80} distance={140} class="bg-secondary">
 					<Dock.Icon class="bg-transparent hover:bg-transparent" transparent>
 						<img src="/content/finder.png" alt="Finder" class="size-full object-contain" />
@@ -125,7 +125,7 @@
 			string prop.
 		</DocPage.Text>
 		<DocPage.Example>
-			<DocPage.Preview class="flex items-center justify-center h-48 pb-10">
+			<DocPage.Preview>
 				<Dock.Root>
 					<Dock.Icon tooltip="GitHub">
 						<Github class="size-5" />

@@ -276,14 +276,18 @@
 					</Timeline.Item>
 
 					<Timeline.Item>
-						<Timeline.Separator class="border-amber-500 text-amber-600 bg-amber-50">
+						<Timeline.Separator class="border-amber-500 text-amber-600 bg-amber-600/10">
 							<span class="font-bold text-[10px]">!</span>
 						</Timeline.Separator>
 						<Timeline.Content>
 							<Timeline.Date>October 15, 2024</Timeline.Date>
-							<div class="p-3 border rounded-md bg-amber-50/50 border-amber-200">
-								<h4 class="text-sm font-semibold text-amber-800">Review Required</h4>
-								<p class="text-xs text-amber-700 mt-1">Please approve the assets before Friday.</p>
+							<div class="p-3 border rounded-md bg-amber-600/10 border-amber-600/30">
+								<h4 class="text-sm font-semibold text-amber-800 dark:text-amber-200">
+									Review Required
+								</h4>
+								<p class="text-xs text-amber-700 dark:text-amber-600 mt-1">
+									Please approve the assets before Friday.
+								</p>
 							</div>
 						</Timeline.Content>
 					</Timeline.Item>
