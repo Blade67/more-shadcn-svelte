@@ -3,10 +3,15 @@
 	import * as Choicebox from '$lib/components/ui/choicebox';
 	import { Label } from '$lib/components/ui/label';
 	import { Sun, Moon, Monitor, Laptop, Smartphone, Tablet } from 'lucide-svelte';
+	import { setMode } from 'mode-watcher';
 
 	let selectedValue = $state('option-1');
 	let planValue = $state('pro');
-	let themeValue = $state('system');
+	let themeValue: 'system' | 'light' | 'dark ' = $state('system');
+
+	function onThemeChange(val: string) {
+		setMode(val as 'system' | 'light' | 'dark');
+	}
 </script>
 
 <DocPage.Root>
@@ -133,53 +138,43 @@
 
 		<DocPage.Heading>Visual Selection</DocPage.Heading>
 		<DocPage.Text
-			>Combine icons and hidden indicators for a polished "Theme Selector" style interface.</DocPage.Text
+			>Combine icons, images and hidden indicators for a polished "Theme Selector" style interface.</DocPage.Text
 		>
 		<DocPage.Example>
 			<DocPage.Preview class="py-10">
 				<div class="w-full max-w-[600px] space-y-4">
 					<Label>Appearance</Label>
-					<Choicebox.Root bind:value={themeValue} class="grid grid-cols-3 gap-4">
-						<Choicebox.Item
-							value="light"
-							class="group flex-col items-center justify-center text-center gap-2 p-4"
-						>
-							<Sun
-								class="h-6 w-6 text-muted-foreground group-data-[state=checked]:text-primary mb-1"
-							/>
-							<Choicebox.Title>Light</Choicebox.Title>
+					<Choicebox.Root
+						bind:value={themeValue}
+						onValueChange={onThemeChange}
+						class="grid grid-cols-3 gap-4"
+					>
+						<Choicebox.Item value="light" class="p-2 overflow-hidden flex flex-col gap-0">
+							<img src="/content/Light.png" alt="Light Mode" class="w-full h-full" />
+							<Choicebox.Title class="p-2 pb-0 w-full text-center">Light</Choicebox.Title>
 							<div class="sr-only"><Choicebox.Indicator /></div>
 						</Choicebox.Item>
 
-						<Choicebox.Item
-							value="dark"
-							class="group flex-col items-center justify-center text-center gap-2 p-4"
-						>
-							<Moon
-								class="h-6 w-6 text-muted-foreground group-data-[state=checked]:text-primary mb-1"
-							/>
-							<Choicebox.Title>Dark</Choicebox.Title>
+						<Choicebox.Item value="dark" class="p-2 overflow-hidden flex flex-col gap-0">
+							<img src="/content/Dark.png" alt="Dark Mode" class="w-full h-auto" />
+							<Choicebox.Title class="p-2 pb-0 w-full text-center">Dark</Choicebox.Title>
 							<div class="sr-only"><Choicebox.Indicator /></div>
 						</Choicebox.Item>
 
-						<Choicebox.Item
-							value="system"
-							class="group flex-col items-center justify-center text-center gap-2 p-4"
-						>
-							<Laptop
-								class="h-6 w-6 text-muted-foreground group-data-[state=checked]:text-primary mb-1"
-							/>
-							<Choicebox.Title>System</Choicebox.Title>
+						<Choicebox.Item value="system" class="p-2 overflow-hidden flex flex-col gap-0">
+							<img src="/content/System.png" alt="System" class="w-full h-auto" />
+							<Choicebox.Title class="p-2 pb-0 w-full text-center">System</Choicebox.Title>
 							<div class="sr-only"><Choicebox.Indicator /></div>
 						</Choicebox.Item>
 					</Choicebox.Root>
 				</div>
 			</DocPage.Preview>
 			<DocPage.Code
-				code={`<Choicebox.Root class="grid grid-cols-3 gap-4">
-  <Choicebox.Item value="light" class="flex-col items-center">
-      <Sun />
-      <Choicebox.Title>Light</Choicebox.Title>
+				code={`<Choicebox.Root {onThemeChange} class="grid grid-cols-3 gap-4">
+  <Choicebox.Item value="light" class="p-2 overflow-hidden flex flex-col gap-0">
+    <img src="light.png" alt="Light Mode" class="w-full h-full" />
+    <Choicebox.Title class="p-2 pb-0 w-full text-center">Light</Choicebox.Title>
+    <div class="sr-only"><Choicebox.Indicator /></div>
   </Choicebox.Item>
   ...
 </Choicebox.Root>`}
