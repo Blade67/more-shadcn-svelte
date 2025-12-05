@@ -379,6 +379,35 @@
       ]
     },
     {
+      "name": "compare-slider",
+      "type": "registry:ui",
+      "title": "Compare Slider",
+      "description": "A slider to compare two overlapping elements, usually images.",
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/lib/components/ui/compare-slider/compare-slider.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/compare-slider/compare-item.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/compare-slider/compare-handle.svelte",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/compare-slider/ctx.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/lib/components/ui/compare-slider/index.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "scrubbable",
       "type": "registry:ui",
       "title": "Scrubbable Input",

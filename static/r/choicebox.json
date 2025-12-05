@@ -9,7 +9,7 @@
 	],
 	"files": [
 		{
-			"content": "<script lang=\"ts\">\r\n    import { cn } from \"$UTILS$\";\r\n    import { setChoiceboxContext } from \"./ctx\";\r\n    import type { Snippet } from \"svelte\";\r\n\r\n    let {\r\n        value = $bindable(),\r\n        class: className,\r\n        children,\r\n        name\r\n    }: {\r\n        value?: string;\r\n        class?: string;\r\n        children: Snippet;\r\n        name?: string;\r\n    } = $props();\r\n\r\n    setChoiceboxContext({\r\n        activeValue: () => value,\r\n        setActive: (v) => { value = v; }\r\n    });\r\n</script>\r\n\r\n<div\r\n        class={cn(\"flex flex-col gap-3\", className)}\r\n        role=\"radiogroup\"\r\n        aria-label={name}\r\n>\r\n    {@render children()}\r\n    {#if name}\r\n        <input type=\"hidden\" {name} {value} />\r\n    {/if}\r\n</div>",
+			"content": "<script lang=\"ts\">\n\timport { cn } from '$UTILS$';\n\timport { setChoiceboxContext } from './ctx';\n\timport type { Snippet } from 'svelte';\n\n\tlet {\n\t\tvalue = $bindable(),\n\t\tclass: className,\n\t\tchildren,\n\t\tname,\n\t\tonValueChange\n\t}: {\n\t\tvalue?: string;\n\t\tclass?: string;\n\t\tchildren: Snippet;\n\t\tname?: string;\n\t\tonValueChange?: (value: string) => void;\n\t} = $props();\n\n\tsetChoiceboxContext({\n\t\tactiveValue: () => value,\n\t\tsetActive: (v) => {\n\t\t\tvalue = v;\n\t\t\tif (onValueChange) {\n\t\t\t\tonValueChange(v);\n\t\t\t}\n\t\t}\n\t});\n</script>\n\n<div class={cn('flex flex-col gap-3', className)} role=\"radiogroup\" aria-label={name}>\n\t{@render children()}\n\t{#if name}\n\t\t<input type=\"hidden\" {name} {value} />\n\t{/if}\n</div>\n",
 			"type": "registry:ui",
 			"target": "choicebox/choicebox.svelte"
 		},
@@ -34,7 +34,7 @@
 			"target": "choicebox/choicebox-description.svelte"
 		},
 		{
-			"content": "import { getContext, setContext } from \"svelte\";\r\n\r\nconst CHOICEBOX_KEY = Symbol(\"choicebox\");\r\n\r\ntype ChoiceboxContext = {\r\n    activeValue: () => string | undefined;\r\n    setActive: (v: string) => void;\r\n};\r\n\r\nexport function setChoiceboxContext(props: ChoiceboxContext) {\r\n    setContext(CHOICEBOX_KEY, props);\r\n}\r\n\r\nexport function getChoiceboxContext() {\r\n    return getContext<ChoiceboxContext>(CHOICEBOX_KEY);\r\n}",
+			"content": "import { getContext, setContext } from 'svelte';\n\nconst CHOICEBOX_KEY = Symbol('choicebox');\n\ntype ChoiceboxContext = {\n\tactiveValue: () => string | undefined;\n\tsetActive: (v: string) => void;\n};\n\nexport function setChoiceboxContext(props: ChoiceboxContext) {\n\tsetContext(CHOICEBOX_KEY, props);\n}\n\nexport function getChoiceboxContext() {\n\treturn getContext<ChoiceboxContext>(CHOICEBOX_KEY);\n}\n",
 			"type": "registry:ui",
 			"target": "choicebox/ctx.ts"
 		},

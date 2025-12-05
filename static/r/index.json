@@ -166,6 +166,22 @@
 		"relativeUrl": "number-ticker.json"
 	},
 	{
+		"name": "compare-slider",
+		"title": "Compare Slider",
+		"type": "registry:ui",
+		"description": "A slider to compare two overlapping elements, usually images.",
+		"registryDependencies": [],
+		"relativeUrl": "compare-slider.json"
+	},
+	{
+		"name": "scrubbable",
+		"title": "Scrubbable Input",
+		"type": "registry:ui",
+		"description": "A drag-to-adjust numeric input, similar to Blender or Unity.",
+		"registryDependencies": [],
+		"relativeUrl": "scrubbable.json"
+	},
+	{
 		"name": "big-calendar",
 		"title": "Big Calendar",
 		"type": "registry:ui",

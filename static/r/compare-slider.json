@@ -1,0 +1,37 @@
+{
+	"$schema": "https://shadcn-svelte.com/schema/registry-item.json",
+	"name": "compare-slider",
+	"title": "Compare Slider",
+	"type": "registry:ui",
+	"description": "A slider to compare two overlapping elements, usually images.",
+	"dependencies": [
+		"lucide-svelte@^0.554.0"
+	],
+	"files": [
+		{
+			"content": "<script lang=\"ts\">\n\timport { cn } from '$UTILS$';\n\timport { setCompareContext } from './ctx';\n\timport type { Snippet } from 'svelte';\n\n\tlet {\n\t\tvalue = $bindable(50),\n\t\torientation = 'horizontal',\n\t\tclass: className,\n\t\tchildren\n\t}: {\n\t\tvalue?: number;\n\t\torientation?: 'horizontal' | 'vertical';\n\t\tclass?: string;\n\t\tchildren: Snippet;\n\t} = $props();\n\n\tlet container: HTMLDivElement | undefined = $state();\n\tlet isDragging = $state(false);\n\n\tfunction handleDown(e: PointerEvent) {\n\t\tif (e.button !== 0 && e.pointerType === 'mouse') return;\n\n\t\tisDragging = true;\n\t\tupdatePosition(e.clientX, e.clientY);\n\n\t\t(e.target as Element).setPointerCapture(e.pointerId);\n\t}\n\n\tfunction handleMove(e: PointerEvent) {\n\t\tif (!isDragging) return;\n\t\tupdatePosition(e.clientX, e.clientY);\n\t}\n\n\tfunction handleUp(e: PointerEvent) {\n\t\tisDragging = false;\n\t\t(e.target as Element).releasePointerCapture(e.pointerId);\n\t}\n\n\tfunction updatePosition(clientX: number, clientY: number) {\n\t\tif (!container) return;\n\n\t\tconst rect = container.getBoundingClientRect();\n\n\t\tif (orientation === 'horizontal') {\n\t\t\tconst x = Math.min(Math.max(0, clientX - rect.left), rect.width);\n\t\t\tvalue = (x / rect.width) * 100;\n\t\t} else {\n\t\t\tconst y = Math.min(Math.max(0, clientY - rect.top), rect.height);\n\t\t\tvalue = (y / rect.height) * 100;\n\t\t}\n\t}\n\n\tfunction handleKeyDown(e: KeyboardEvent) {\n\t\tconst step = e.shiftKey ? 10 : 1;\n\t\tif (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {\n\t\t\te.preventDefault();\n\t\t\tvalue = Math.max(0, value - step);\n\t\t} else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {\n\t\t\te.preventDefault();\n\t\t\tvalue = Math.min(100, value + step);\n\t\t} else if (e.key === 'Home') {\n\t\t\te.preventDefault();\n\t\t\tvalue = 0;\n\t\t} else if (e.key === 'End') {\n\t\t\te.preventDefault();\n\t\t\tvalue = 100;\n\t\t}\n\t}\n\n\tsetCompareContext({\n\t\tposition: () => value,\n\t\torientation: () => orientation,\n\t\tisDragging: () => isDragging\n\t});\n</script>\n\n<div\n\tbind:this={container}\n\trole=\"slider\"\n\taria-valuenow={value}\n\taria-valuemin={0}\n\taria-valuemax={100}\n\ttabindex=\"0\"\n\tonpointerdown={handleDown}\n\tonpointermove={handleMove}\n\tonpointerup={handleUp}\n\tonkeydown={handleKeyDown}\n\tclass={cn(\n\t\t'group relative select-none overflow-hidden touch-none',\n\t\torientation === 'horizontal' ? 'cursor-ew-resize' : 'cursor-ns-resize',\n\t\tclassName\n\t)}\n\tstyle=\"--pos: {value}%\"\n>\n\t{@render children()}\n</div>\n",
+			"type": "registry:ui",
+			"target": "compare-slider/compare-slider.svelte"
+		},
+		{
+			"content": "<script lang=\"ts\">\n\timport { cn } from '$UTILS$';\n\timport { getCompareContext } from './ctx';\n\timport type { Snippet } from 'svelte';\n\n\tlet {\n\t\ttarget = 'first',\n\t\tclass: className,\n\t\tchildren\n\t}: {\n\t\ttarget?: 'first' | 'second';\n\t\tclass?: string;\n\t\tchildren: Snippet;\n\t} = $props();\n\n\tconst ctx = getCompareContext();\n\tlet isHorizontal = $derived(ctx.orientation() === 'horizontal');\n</script>\n\n<div\n\tclass={cn('absolute inset-0 h-full w-full select-none', className)}\n\tstyle:clip-path={target === 'second'\n\t\t? isHorizontal\n\t\t\t? 'inset(0 calc(100% - var(--pos)) 0 0)'\n\t\t\t: 'inset(0 0 calc(100% - var(--pos)) 0)'\n\t\t: undefined}\n>\n\t{@render children()}\n</div>\n",
+			"type": "registry:ui",
+			"target": "compare-slider/compare-item.svelte"
+		},
+		{
+			"content": "<script lang=\"ts\">\n\timport { cn } from '$UTILS$';\n\timport { getCompareContext } from './ctx';\n\timport { GripVertical, GripHorizontal } from 'lucide-svelte';\n\timport type { Snippet } from 'svelte';\n\n\tlet {\n\t\tclass: className,\n\t\tchildren\n\t}: {\n\t\tclass?: string;\n\t\tchildren?: Snippet;\n\t} = $props();\n\n\tconst ctx = getCompareContext();\n\tlet isHorizontal = $derived(ctx.orientation() === 'horizontal');\n</script>\n\n<div\n\tclass={cn(\n\t\t'absolute pointer-events-none z-2 flex items-center justify-center text-primary-foreground',\n\t\tisHorizontal\n\t\t\t? 'top-0 bottom-0 w-1 -ml-0.5 left-[var(--pos)]'\n\t\t\t: 'left-0 right-0 h-1 -mt-0.5 top-[var(--pos)]',\n\t\tclassName\n\t)}\n>\n\t<div\n\t\tclass={cn(\n\t\t\t'absolute bg-accent shadow-[0_0_10px_rgba(0,0,0,0.5)]',\n\t\t\tisHorizontal ? 'h-full w-0.5' : 'w-full h-0.5'\n\t\t)}\n\t/>\n\n\t<div\n\t\tclass=\"relative z-1 w-5 h-5 flex items-center justify-center rounded-xs bg-accent text-primary shadow-md border border-black/10\"\n\t>\n\t\t{#if children}\n\t\t\t{@render children()}\n\t\t{:else if isHorizontal}\n\t\t\t<GripVertical class=\"h-4 w-4 opacity-50\" />\n\t\t{:else}\n\t\t\t<GripHorizontal class=\"h-4 w-4 opacity-50\" />\n\t\t{/if}\n\t</div>\n</div>\n",
+			"type": "registry:ui",
+			"target": "compare-slider/compare-handle.svelte"
+		},
+		{
+			"content": "import { getContext, setContext } from 'svelte';\n\nconst COMPARE_KEY = Symbol('compare-slider');\n\ntype CompareContext = {\n\tposition: () => number;\n\torientation: () => 'horizontal' | 'vertical';\n\tisDragging: () => boolean;\n};\n\nexport function setCompareContext(props: CompareContext) {\n\tsetContext(COMPARE_KEY, props);\n}\n\nexport function getCompareContext() {\n\treturn getContext<CompareContext>(COMPARE_KEY);\n}\n",
+			"type": "registry:ui",
+			"target": "compare-slider/ctx.ts"
+		},
+		{
+			"content": "import Root from './compare-slider.svelte';\nimport Item from './compare-item.svelte';\nimport Handle from './compare-handle.svelte';\n\nexport { Root, Item, Handle };\n",
+			"type": "registry:ui",
+			"target": "compare-slider/index.ts"
+		}
+	]
+}

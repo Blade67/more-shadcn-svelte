@@ -1,0 +1,37 @@
+{
+	"$schema": "https://shadcn-svelte.com/schema/registry-item.json",
+	"name": "scrubbable",
+	"title": "Scrubbable Input",
+	"type": "registry:ui",
+	"description": "A drag-to-adjust numeric input, similar to Blender or Unity.",
+	"dependencies": [
+		"class-variance-authority@^0.7.1"
+	],
+	"files": [
+		{
+			"content": "<script lang=\"ts\">\n\timport { cn } from '$UTILS$';\n\timport { setScrubbableContext } from './ctx';\n\timport type { Snippet } from 'svelte';\n\timport { cva, type VariantProps } from 'class-variance-authority';\n\n\tconst scrubbableVariants = cva(\n\t\t'group relative inline-flex items-center justify-between cursor-ew-resize select-none touch-none rounded-md px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50',\n\t\t{\n\t\t\tvariants: {\n\t\t\t\tvariant: {\n\t\t\t\t\tdefault: 'bg-muted text-foreground hover:bg-muted/80',\n\t\t\t\t\tprimary: 'bg-primary text-primary-foreground hover:bg-primary/90',\n\t\t\t\t\toutline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',\n\t\t\t\t\tsecondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',\n\t\t\t\t\tghost: 'hover:bg-accent hover:text-accent-foreground'\n\t\t\t\t},\n\t\t\t\tsize: {\n\t\t\t\t\tdefault: 'h-9',\n\t\t\t\t\tsm: 'h-8 px-2 text-xs',\n\t\t\t\t\tlg: 'h-10 px-4',\n\t\t\t\t\ticon: 'h-9 w-9 justify-center px-0'\n\t\t\t\t}\n\t\t\t},\n\t\t\tdefaultVariants: {\n\t\t\t\tvariant: 'default',\n\t\t\t\tsize: 'default'\n\t\t\t}\n\t\t}\n\t);\n\n\ttype Props = VariantProps<typeof scrubbableVariants> & {\n\t\tvalue: number;\n\t\tmin?: number;\n\t\tmax?: number;\n\t\tstep?: number;\n\t\tsensitivity?: number;\n\t\tdefaultValue?: number;\n\t\tclass?: string;\n\t\tonValueChange?: (v: number) => void;\n\t\tchildren: Snippet;\n\t};\n\n\tlet {\n\t\tvalue = $bindable(0),\n\t\tmin = -Infinity,\n\t\tmax = Infinity,\n\t\tstep = 1,\n\t\tsensitivity = 2,\n\t\tdefaultValue,\n\t\tvariant,\n\t\tsize,\n\t\tclass: className,\n\t\tonValueChange,\n\t\tchildren\n\t}: Props = $props();\n\n\tlet isDragging = $state(false);\n\tlet startX = 0;\n\tlet startValue = 0;\n\n\tfunction handleMouseDown(e: MouseEvent) {\n\t\tif (e.button !== 0) return;\n\n\t\tisDragging = true;\n\t\tstartX = e.clientX;\n\t\tstartValue = value;\n\n\t\tdocument.body.style.cursor = 'ew-resize';\n\t\tdocument.body.style.userSelect = 'none';\n\n\t\twindow.addEventListener('mousemove', handleMove);\n\t\twindow.addEventListener('mouseup', handleUp);\n\t}\n\n\tfunction handleMove(e: MouseEvent) {\n\t\tif (!isDragging) return;\n\n\t\tconst deltaX = e.clientX - startX;\n\t\tconst isPrecision = e.shiftKey;\n\n\t\tconst dragScale = isPrecision ? 0.1 : 1;\n\t\tconst change = (deltaX / sensitivity) * step * dragScale;\n\n\t\tlet newValue = startValue + change;\n\n\t\tnewValue = Math.max(min, Math.min(max, newValue));\n\n\t\tif (!isPrecision) {\n\t\t\tnewValue = Math.round(newValue / step) * step;\n\t\t}\n\n\t\tconst decimals = step.toString().split('.')[1]?.length || 0;\n\t\tnewValue = parseFloat(newValue.toFixed(isPrecision ? decimals + 1 : decimals));\n\n\t\tvalue = newValue;\n\t\tonValueChange?.(newValue);\n\t}\n\n\tfunction handleUp() {\n\t\tisDragging = false;\n\t\tdocument.body.style.cursor = '';\n\t\tdocument.body.style.userSelect = '';\n\n\t\twindow.removeEventListener('mousemove', handleMove);\n\t\twindow.removeEventListener('mouseup', handleUp);\n\t}\n\n\tfunction handleDoubleClick() {\n\t\tlet resetVal = defaultValue;\n\n\t\tif (resetVal === undefined) {\n\t\t\tif (min > -Infinity) resetVal = min;\n\t\t\telse resetVal = 0;\n\t\t}\n\n\t\tvalue = resetVal;\n\t\tonValueChange?.(value);\n\t}\n\n\tsetScrubbableContext({\n\t\tvalue: () => value,\n\t\tisDragging: () => isDragging\n\t});\n</script>\n\n<div\n\trole=\"slider\"\n\taria-valuenow={value}\n\taria-valuemin={min}\n\taria-valuemax={max}\n\ttabindex=\"0\"\n\tonmousedown={handleMouseDown}\n\tondblclick={handleDoubleClick}\n\tclass={cn(scrubbableVariants({ variant, size, className }))}\n>\n\t{@render children()}\n</div>\n",
+			"type": "registry:ui",
+			"target": "scrubbable/scrubbable.svelte"
+		},
+		{
+			"content": "<script lang=\"ts\">\n\timport { cn } from '$UTILS$';\n\timport type { Snippet } from 'svelte';\n\tlet { class: className, children }: { class?: string; children: Snippet } = $props();\n</script>\n\n<span class={cn('text-xs font-medium opacity-70 mr-2 pointer-events-none', className)}>\n\t{@render children()}\n</span>\n",
+			"type": "registry:ui",
+			"target": "scrubbable/scrubbable-label.svelte"
+		},
+		{
+			"content": "<script lang=\"ts\">\n\timport { cn } from '$UTILS$';\n\timport { getScrubbableContext } from './ctx';\n\n\tlet {\n\t\tclass: className,\n\t\tformat = (v: number) => v.toString()\n\t}: {\n\t\tclass?: string;\n\t\tformat?: (v: number) => string;\n\t} = $props();\n\n\tconst ctx = getScrubbableContext();\n\tlet val = $derived(ctx.value());\n</script>\n\n<span class={cn('tabular-nums pointer-events-none transition-opacity', className)}>\n\t{format(val)}\n</span>\n",
+			"type": "registry:ui",
+			"target": "scrubbable/scrubbable-value.svelte"
+		},
+		{
+			"content": "import { getContext, setContext } from 'svelte';\n\nconst SCRUBBABLE_KEY = Symbol('scrubbable');\n\ntype ScrubbableContext = {\n\tvalue: () => number;\n\tisDragging: () => boolean;\n};\n\nexport function setScrubbableContext(props: ScrubbableContext) {\n\tsetContext(SCRUBBABLE_KEY, props);\n}\n\nexport function getScrubbableContext() {\n\treturn getContext<ScrubbableContext>(SCRUBBABLE_KEY);\n}\n",
+			"type": "registry:ui",
+			"target": "scrubbable/ctx.ts"
+		},
+		{
+			"content": "import Root from './scrubbable.svelte';\nimport Label from './scrubbable-label.svelte';\nimport Value from './scrubbable-value.svelte';\n\nexport { Root, Label, Value };\n",
+			"type": "registry:ui",
+			"target": "scrubbable/index.ts"
+		}
+	]
+}
