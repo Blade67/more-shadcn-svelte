@@ -257,9 +257,7 @@
 					</div>
 
 					<Kbd.Group>
-						<Kbd.Root>Ctrl</Kbd.Root>
-						<span class="text-muted-foreground">+</span>
-						<Kbd.Root>K</Kbd.Root>
+						<Kbd.Root>⌘+K</Kbd.Root>
 					</Kbd.Group>
 				</Button>
 				<div class="flex items-center gap-2">
