@@ -127,10 +127,10 @@
 				</div>
 			</DocPage.Preview>
 			<DocPage.Code
-				code={`<WheelPicker.Root>
-  <WheelPicker.Group bind:value={day} loop>
-    {#each days as day}
-      <WheelPicker.Item value={day}>{day}</WheelPicker.Item>
+				code={`<WheelPicker.Root collapsed>
+  <WheelPicker.Group bind:value={selectedFramework}>
+    {#each frameworks as fw}
+      <WheelPicker.Item value={fw}>{fw}</WheelPicker.Item>
     {/each}
   </WheelPicker.Group>
 </WheelPicker.Root>`}
